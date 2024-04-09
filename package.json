@@ -24,5 +24,9 @@
     "tsup": "^8.0.2",
     "typescript": "^5.4.4"
   },
-  "release-it": {}
+  "release-it": {
+    "hooks": {
+      "after:bump": "npm run build"
+    }
+  }
 }
