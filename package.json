@@ -6,7 +6,8 @@
     "create-hacxy-app": "dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "template"
   ],
   "scripts": {
     "dev": "tsup --watch --sourcemap",
