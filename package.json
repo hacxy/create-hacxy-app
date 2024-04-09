@@ -1,6 +1,6 @@
 {
   "name": "create-hacxy-app",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "bin": {
     "create-hacxy-app": "dist/index.js"
