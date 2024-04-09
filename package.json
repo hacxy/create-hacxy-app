@@ -1,0 +1,28 @@
+{
+  "name": "create-hacxy-app",
+  "version": "0.0.0",
+  "description": "",
+  "bin": {
+    "create-hacxy-app": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsup --watch --sourcemap",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "release": "release-it"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/prompts": "^2.4.9",
+    "prompts": "^2.4.2",
+    "release-it": "^17.1.1",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.4"
+  },
+  "release-it": {}
+}
