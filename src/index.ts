@@ -25,10 +25,10 @@ const bootstrap = async () => {
   );
 
   console.log(`
-  创建成功 !! 🥳
+  创建成功!! 🥳
 
   cd ${result.projectName}
-  npm run install
+  npm install
   npm run dev
   `);
 };
