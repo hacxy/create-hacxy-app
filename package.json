@@ -1,33 +1,58 @@
 {
   "name": "create-hacxy-app",
   "version": "1.0.2",
-  "description": "",
+  "type": "module",
+  "author": {
+    "name": "hacxy",
+    "email": "hacxy.js@outlook.com",
+    "url": "https://github.com/hacxy"
+  },
+  "license": "MIT",
+  "description": "快速创建用于开发Web以及Node.js项目的脚手架命令行工具",
   "bin": {
-    "create-hacxy-app": "dist/index.js"
+    "create-hacxy-app": "./index.js"
+  },
+  "homepage": "https://github.com/hacxy/create-hacxy-app#readme.",
+  "bugs": {
+    "url": "https://github.com/hacxy/create-hacxy-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hacxy/create-hacxy-app.git"
   },
   "files": [
-    "dist",
-    "template"
+    "dist"
   ],
   "scripts": {
-    "dev": "tsup --watch --sourcemap",
-    "build": "tsup",
-    "typecheck": "tsc --noEmit",
-    "release": "release-it"
+    "start": "node index.js",
+    "dev": "unbuild --stub && npm link",
+    "build": "unbuild",
+    "typecheck": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  },
+  "keywords": [
+    "cli"
+  ],
   "devDependencies": {
-    "@types/prompts": "^2.4.9",
-    "prompts": "^2.4.2",
-    "release-it": "^17.1.1",
-    "tsup": "^8.0.2",
-    "typescript": "^5.4.4"
+    "@eslint/js": "^9.1.1",
+    "@release-it/conventional-changelog": "^9.0.1",
+    "@types/node": "^20.12.5",
+    "eslint": "^8.57.0",
+    "globals": "^15.0.0",
+    "release-it": "^17.10.0",
+    "typescript": "^5.4.2",
+    "typescript-eslint": "^7.7.1",
+    "unbuild": "^2.0.0"
   },
-  "release-it": {
-    "hooks": {
-      "after:bump": "npm run build"
-    }
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "@inquirer/prompts": "^7.0.1",
+    "cfonts": "^3.3.0",
+    "dirname-filename-esm": "^1.1.2",
+    "execa": "^9.5.1",
+    "gradient-string": "^3.0.0",
+    "simple-git": "^3.27.0"
   }
 }

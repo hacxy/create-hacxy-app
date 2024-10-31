@@ -1,5 +1,9 @@
-# create-hacxy-app
+# Create Hacxy App
 
-这是一个使用 typescript 开发的 nodejs 脚手架 demo
+快速创建由 Node.js 平台上开发或运行的 Typescript 项目模板, 包含: 前端项目、后端项目、CLI 项目、VSCode 插件开发项目 等
 
-前往 [bilibili](https://www.bilibili.com/video/BV11D421W7zC/?vd_source=e757910ef1ed0824b2dc259b46ca8cee) 可以观看此仓库的详细视频教程
+> 由于我个人不再喜欢使用 javascript 开发其他任何项目, 所以本工具创建的所有项目默认都使用 typescript
+
+## 使用
+
+Node.js 版本号需大于等于 18.0.0

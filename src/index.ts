@@ -1,36 +1,43 @@
-#!/usr/bin/env node
-
-import prompts from "prompts";
+import { intro, text, select, outro } from "@clack/prompts";
+import { copyTemplate, isCancelOperate } from "./utils";
+import { fileURLToPath } from "node:url";
+import pakageJson from "../package.json";
+import { prompts } from "./prompts";
 import path from "node:path";
-import fs from "node:fs";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const bootstrap = async () => {
-  const result = await prompts([
-    {
-      type: "text",
-      name: "projectName",
-      message: "请输入项目名称: ",
+  intro(`Create Hacxy App v${pakageJson.version}`);
+  const projectName = (await text({
+    message: "请输入项目名称:",
+    defaultValue: "hacxy-app",
+    placeholder: "hacxy-app",
+    validate: (value) => {
+      if (!value) return "项目名称不合法";
     },
-  ]);
+  })) as string;
+  isCancelOperate(projectName);
 
-  const targetPath = path.resolve(process.cwd(), result.projectName);
-  const sourcePath = path.resolve(__dirname, "../template");
+  const projectTemplates = (await select({
+    message: "请选择需要创建的项目类型:",
+    options: prompts,
+  })) as { label: string; value: string }[];
+  isCancelOperate(projectTemplates);
 
-  fs.cpSync(sourcePath, targetPath, {
-    recursive: true,
-  });
+  // 选择模板
+  const projectTemplate = (await select({
+    message: "请选择项目模板:",
+    options: projectTemplates,
+  })) as string;
 
-  fs.renameSync(
-    path.resolve(targetPath, "_gitignore"),
-    path.resolve(targetPath, ".gitignore")
-  );
+  isCancelOperate(projectTemplate);
 
-  console.log(`
-  创建成功!! 🥳
+  // 复制模板到本地
+  copyTemplate(__dirname, projectTemplate, projectName);
 
-  cd ${result.projectName}
-  npm install
-  npm run dev
-  `);
+  outro(`项目创建成功!`);
+  console.log(`请执行: \n  cd ${projectName}\n  npm install`);
 };
 
 bootstrap();
