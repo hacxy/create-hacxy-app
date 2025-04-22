@@ -1,0 +1,64 @@
+{
+  "name": "cli-unbuild-template",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "CLI application development template using unbuild as a build tool.",
+  "author": "",
+  "license": "MIT",
+  "keywords": [
+    "cli"
+  ],
+  "bin": {
+    "hello-cli": "index.js"
+  },
+  "files": [
+    "dist",
+    "index.js"
+  ],
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "build:out": "tsc -p tsconfig.build.json",
+    "commit": "git-cz",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp && npm publish",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "prepare": "simple-git-hooks",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@hacxy/eslint-config": "^0.0.4",
+    "@types/node": "^20.12.5",
+    "@vitest/coverage-istanbul": "2.1.8",
+    "bumpp": "^9.9.0",
+    "commitizen": "^4.3.1",
+    "cz-git": "^1.11.0",
+    "eslint": "^9.16.0",
+    "lint-staged": "^15.2.11",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.7.2",
+    "unbuild": "^3.3.1",
+    "vitest": "^2.1.8"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged",
+    "commit-msg": "node scripts/git-hooks/commit-msg.mjs"
+  },
+  "lint-staged": {
+    "*": [
+      "eslint --fix"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git",
+      "useEmoji": false
+    }
+  }
+}

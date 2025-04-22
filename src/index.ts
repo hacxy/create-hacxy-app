@@ -1,43 +1,53 @@
-import { intro, text, select, outro } from "@clack/prompts";
-import { copyTemplate, isCancelOperate } from "./utils";
-import { fileURLToPath } from "node:url";
-import pakageJson from "../package.json";
-import { prompts } from "./prompts";
-import path from "node:path";
+import { cpSync, existsSync, renameSync, rmSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { confirm, input } from '@inquirer/prompts';
+import consola from 'consola';
+import { red } from 'kolorist';
+import config from '../template.config.json';
+import { parseArg, printActionsInfo, renamePackageName } from './utils/common';
+import { errorLog } from './utils/log';
+import { prompts } from './utils/prompts';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const templatePath = path.resolve(__dirname, '../templates');
 
-const bootstrap = async () => {
-  intro(`Create Hacxy App v${pakageJson.version}`);
-  const projectName = (await text({
-    message: "请输入项目名称:",
-    defaultValue: "hacxy-app",
-    placeholder: "hacxy-app",
-    validate: (value) => {
-      if (!value) return "项目名称不合法";
-    },
-  })) as string;
-  isCancelOperate(projectName);
+export async function bootstrap() {
+  let { projectName, template } = parseArg();
 
-  const projectTemplates = (await select({
-    message: "请选择需要创建的项目类型:",
-    options: prompts,
-  })) as { label: string; value: string }[];
-  isCancelOperate(projectTemplates);
+  if (!projectName) {
+    projectName = await input({ message: 'Please enter the project name:', default: 'ts-project', required: true }).catch(() => {
+      consola.error(red('Cancelled!'));
+      process.exit(0);
+    });
+  }
 
-  // 选择模板
-  const projectTemplate = (await select({
-    message: "请选择项目模板:",
-    options: projectTemplates,
-  })) as string;
+  if (!template) {
+    template = await prompts(config);
+  }
 
-  isCancelOperate(projectTemplate);
+  const finalTempPath = path.resolve(templatePath, template);
+  const targetPath = path.resolve(process.cwd(), projectName);
 
-  // 复制模板到本地
-  copyTemplate(__dirname, projectTemplate, projectName);
+  // check dir is empty
+  if (existsSync(targetPath)) {
+    const isRemove = await confirm({
+      message: `Target directory ${targetPath} is not empty. Remove existing files and continue?`,
+      default: true
+    }).catch(() => {
+      errorLog('Cancelled!');
+      process.exit(0);
+    });
 
-  outro(`项目创建成功!`);
-  console.log(`请执行: \n  cd ${projectName}\n  npm install`);
-};
+    if (isRemove) {
+      rmSync(targetPath, { force: true, recursive: true });
+    }
+  }
+  cpSync(finalTempPath, targetPath, { recursive: true });
+  renameSync(path.resolve(targetPath, '_gitignore'), path.resolve(targetPath, '.gitignore'));
+  renamePackageName(projectName, targetPath);
+  printActionsInfo(targetPath);
+}
 
 bootstrap();

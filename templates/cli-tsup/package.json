@@ -1,0 +1,57 @@
+{
+  "name": "cli-tsup-template",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "keywords": [
+    "cli"
+  ],
+  "bin": {
+    "hello": "./index.js"
+  },
+  "scripts": {
+    "start": "dist/index.js",
+    "dev": "tsup --watch --sourcemap",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "commit": "git-cz",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "prepare": "simple-git-hooks",
+    "release": "node scripts/release.js",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+  },
+  "devDependencies": {
+    "@hacxy/eslint-config": "^0.0.8",
+    "@types/node": "^22.14.1",
+    "@vitest/coverage-istanbul": "2.1.8",
+    "commitizen": "^4.3.1",
+    "conventional-changelog-cli": "^5.0.0",
+    "cz-git": "^1.11.0",
+    "eslint": "^9.17.0",
+    "lint-staged": "^15.2.11",
+    "simple-git-hooks": "^2.11.1",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3",
+    "vitest": "^2.1.8"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged",
+    "commit-msg": "node scripts/git-hooks/commit-msg.mjs"
+  },
+  "lint-staged": {
+    "*": [
+      "npm run lint:fix"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git",
+      "useEmoji": false
+    }
+  }
+}

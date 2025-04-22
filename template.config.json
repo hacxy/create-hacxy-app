@@ -1,0 +1,42 @@
+{
+  "title": "项目类型",
+  "message": "请选项目类型:",
+  "description": "选择需要创建的项目",
+  "type": "select",
+  "items": {
+    "cli": {
+      "title": "CLI",
+      "message": "Please select CLI project template:",
+      "description": "CLI project template",
+      "type": "select",
+      "items": {
+        "unbuild": {
+          "title": "cli-unbuild",
+          "message": "",
+          "description": "Use Unbuild as the packaging and building tool CLI template.",
+          "repo": "hacxy/cli-unbuild-template"
+        },
+        "tsup": {
+          "title": "cli-tsup",
+          "message": "",
+          "description": "Use Tsup as the packaging and building tool CLI template.",
+          "repo": "hacxy/cli-tsup-template"
+        }
+      }
+    },
+    "library": {
+      "title": "library",
+      "message": "Please select a library project template:",
+      "description": "Library project template",
+      "type": "select",
+      "items": {
+        "vite": {
+          "title": "library-vite",
+          "message": "",
+          "description": "Use Vite as the packaging and building tool library template.",
+          "repo": "hacxy/library-vite-template"
+        }
+      }
+    }
+  }
+}

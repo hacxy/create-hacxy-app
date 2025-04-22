@@ -1,9 +1,12 @@
-import { defineBuildConfig } from "unbuild";
+import { defineBuildConfig } from 'unbuild';
 
 export default defineBuildConfig({
-  entries: ["src/index"],
+  entries: ['src/index'],
   clean: true,
   declaration: false,
   sourcemap: false,
-  rollup: { esbuild: { target: "node18", minify: true } },
+  rollup: {
+    esbuild: { target: 'node18', minify: true }
+  },
+
 });
